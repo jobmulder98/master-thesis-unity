@@ -57,6 +57,7 @@ public class GazeDataReceiver : MonoBehaviour
         var eyeTrackingData = TobiiXR.GetEyeTrackingData(TobiiXR_TrackingSpace.World);
         timeStamp = eyeTrackingData.Timestamp;
 
+        // add try block to this component
         var grabbedItem = GetComponent<XRGrabInteractable>().name;
         
         // if (grabbedItem.isSelected)
