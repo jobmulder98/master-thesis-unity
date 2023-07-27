@@ -6,11 +6,12 @@ using UnityEngine.AI;
 public class characterController : MonoBehaviour
 {
     public Transform[] checkpoints;
-    public Animator animator;
-    public int actionAtCheckpoint;
+    public int actionAtCheckpoint = 1;
+    public bool doAction = false; 
     public string action;
     public float stopDuration = 3.2f; // Duration to stop at the checkpoint
 
+    private Animator animator;
     private NavMeshAgent theAgent;
     private int currentCheckpointIndex = 0;
     private bool isAnimating = false;
@@ -18,6 +19,7 @@ public class characterController : MonoBehaviour
     void Start()
     {
         theAgent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         if (checkpoints.Length == 0)
         {
             theAgent.SetDestination(checkpoints[0].position);
@@ -62,9 +64,9 @@ public class characterController : MonoBehaviour
         yield return new WaitForSeconds(stopDuration);
 
         // Resume movement
+        animator.SetBool(action, false);
         theAgent.isStopped = false;
         isAnimating = false;
-        animator.SetBool(action, false);
 
         // Proceed to the next checkpoint
         theAgent.SetDestination(checkpoints[currentCheckpointIndex].position);
