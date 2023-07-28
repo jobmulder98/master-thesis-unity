@@ -7,7 +7,6 @@ public class characterController : MonoBehaviour
 {
     public Transform[] checkpoints;
     public int actionAtCheckpoint = 1;
-    public bool doAction = false; 
     public string action;
     public float stopDuration = 3.2f; // Duration to stop at the checkpoint
 
