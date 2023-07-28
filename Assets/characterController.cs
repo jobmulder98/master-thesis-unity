@@ -8,7 +8,7 @@ public class characterController : MonoBehaviour
     public Transform[] checkpoints;
     public int actionAtCheckpoint = 1;
     public string action;
-    public float stopDuration = 3.2f; // Duration to stop at the checkpoint
+    public float stopDuration = 3.6f; // Duration to stop at the checkpoint
 
     private Animator animator;
     private NavMeshAgent theAgent;
@@ -69,5 +69,10 @@ public class characterController : MonoBehaviour
 
         // Proceed to the next checkpoint
         theAgent.SetDestination(checkpoints[currentCheckpointIndex].position);
+    }
+
+    public void NewEvent()
+    {
+        return; // Event is created for predefined animation. Bug does nothing but is annoying, this function removes the error in Unity.
     }
 }
