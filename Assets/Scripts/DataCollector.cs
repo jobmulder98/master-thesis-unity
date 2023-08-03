@@ -28,10 +28,11 @@ public class DataCollector : MonoBehaviour
     public Rigidbody RigidBodyLeftController;
     public Rigidbody RigidBodyRightController;
 
-    private XRGrabInteractable interactor;
+    private XRGrabInteractable grabbedObject;
     public bool isGrabbing;
 
     public countObjectsColliding objectsCollidingScript;
+    public ControllerGrabLogger controllerGrabLogger; 
 
     // Start is called before the first frame update
     void Awake()
@@ -42,6 +43,7 @@ public class DataCollector : MonoBehaviour
 
     void Start()
     {
+        grabbedObject = GetComponent<XRGrabInteractable>();
         CreateOutput();
     }
 
@@ -62,11 +64,6 @@ public class DataCollector : MonoBehaviour
 
         var eyeTrackingData = TobiiXR.GetEyeTrackingData(TobiiXR_TrackingSpace.World);
         timeStamp = eyeTrackingData.Timestamp;
-
-        // add try block to this component
-        var grabbedItem = GetComponent<XRGrabInteractable>().name;
-        
-        // if (grabbedItem.isSelected)
 
         if (eyeTrackingData.GazeRay.IsValid)
         {
@@ -127,7 +124,9 @@ public class DataCollector : MonoBehaviour
                  RightControllerRotation,
                  RightControllerVelocity,
                  objectsCollidingScript.numberOfItemsInCart,
-                 objectsCollidingScript.itemsInCart
+                 objectsCollidingScript.itemsInCart,
+                 controllerGrabLogger.isGrabbing,
+                 controllerGrabLogger.grabbedObjectName
                  );
         }
     }
@@ -156,6 +155,8 @@ public class DataCollector : MonoBehaviour
         "RightControllerVelocity;" +
         "numberOfItemsInCart;" + 
         "itemsInCart;" +
+        "isGrabbing;" +
+        "grabbedObjectName" +
         Environment.NewLine;
 
         File.AppendAllText(fileName, variable);
@@ -180,7 +181,9 @@ public class DataCollector : MonoBehaviour
         Quaternion RightControllerRotation,
         Vector3 RightControllerVelocity,
         int numberOfItemsInCart,
-        List<string> itemsInCart
+        List<string> itemsInCart,
+        bool isGrabbing, 
+        string grabbedObjectName
         )
     {
         string value =
@@ -205,6 +208,8 @@ public class DataCollector : MonoBehaviour
             RightControllerVelocity.ToString() + ";" +
             numberOfItemsInCart.ToString() + ";" +
             itemsInCart.ToString() + ";" +
+            isGrabbing.ToString() + ";" + 
+            grabbedObjectName + ";" +
             Environment.NewLine;
 
         File.AppendAllText(fileName, value);
