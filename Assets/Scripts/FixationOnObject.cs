@@ -10,25 +10,22 @@ using System;
 public class FixationOnObject : MonoBehaviour, IGazeFocusable
 {
 
-    private int userID = DataCollector.userID;
-    private string condition = DataCollector.condition;
-    private string dataDirectory = DataCollector.dataDirectory;
-    private string fileName;
+    //private int userID = DataCollector.userID;
+    //private string condition = DataCollector.condition;
+    //private string dataDirectory = DataCollector.dataDirectory;
+    //private string fileName;
     private float timeStamp;
     private int frame;
     private bool _hasFocus;
     private int _numberFocusedOnObject;
     private float _totalGazeTime;
  
-
-        // Start is called before the first frame update
     void Start()
     {
-        fileName = Directory.GetCurrentDirectory() + "\\" + dataDirectory + "\\" + gameObject.name.ToString() + condition + "_" + userID.ToString() + ".csv";
-        CreateOutput();
+        //fileName = Directory.GetCurrentDirectory() + "\\" + dataDirectory + "\\" + gameObject.name.ToString() + condition + "_" + userID.ToString() + ".csv";
+        //CreateOutput();
     }
 
-    // Update is called once per frame
     void Update()
     {
         var eyeTrackingData = TobiiXR.GetEyeTrackingData(TobiiXR_TrackingSpace.World);
@@ -36,7 +33,7 @@ public class FixationOnObject : MonoBehaviour, IGazeFocusable
         
         if (_hasFocus)
         {
-            WriteOutput();
+            //WriteOutput();
             _totalGazeTime += Time.deltaTime;
         }
             
@@ -62,30 +59,30 @@ public class FixationOnObject : MonoBehaviour, IGazeFocusable
         return value.ToString("yyyy-MM-dd HH:mm:ss.ffff");
     }
 
-    void CreateOutput()
-    {
-        string variable =
-        "objectName;" +
-        "timesFocusedOnObject;" + 
-        "frame;" +                                         // frame number in session
-        "Timestamp;" +                                     // timestamp in session
-        Environment.NewLine;
+    //void CreateOutput()
+    //{
+    //    string variable =
+    //    "objectName;" +
+    //    "timesFocusedOnObject;" + 
+    //    "frame;" +                                         // frame number in session
+    //    "Timestamp;" +                                     // timestamp in session
+    //    Environment.NewLine;
 
-        File.AppendAllText(fileName, variable);
-    }
+    //    File.AppendAllText(fileName, variable);
+    //}
 
-    void WriteOutput()
-    {
-        string value =
-            gameObject.name + ";" +
-            _numberFocusedOnObject.ToString() + ";" +
-            _totalGazeTime.ToString() + ";" +
-            frame.ToString() + ";" +                                 
-            //GetTimestamp(DateTime.Now) + ";" + 
-            timeStamp + ";" +
-            Environment.NewLine;
+    //void WriteOutput()
+    //{
+    //    string value =
+    //        gameObject.name + ";" +
+    //        _numberFocusedOnObject.ToString() + ";" +
+    //        _totalGazeTime.ToString() + ";" +
+    //        frame.ToString() + ";" +                                 
+    //        //GetTimestamp(DateTime.Now) + ";" + 
+    //        timeStamp + ";" +
+    //        Environment.NewLine;
 
-        File.AppendAllText(fileName, value);
-    }
+    //    File.AppendAllText(fileName, value);
+    //}
 }
 
