@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -14,18 +15,23 @@ public class ControllerGrabLogger : MonoBehaviour
 
     private void Update()
     {
-        if (interactor.selectTarget)
+        if (interactor.hasSelection)
         {
-            XRBaseInteractable interactable = interactor.selectTarget;
-            if (interactable != null && interactable is XRGrabInteractable grabInteractable)
+            List<IXRSelectInteractable> interactables = interactor.interactablesSelected;
+            foreach (IXRSelectInteractable interactable in interactables)
             {
-                grabbedObjectName = grabInteractable.gameObject.name;
-                isGrabbing = true;
+                if (interactable is XRGrabInteractable grabInteractable)
+                {
+                    grabbedObjectName = grabInteractable.gameObject.name;
+                    isGrabbing = true;
+                    return;
+                }
             }
+            grabbedObjectName = "noObjectGrabbed";
+            isGrabbing = false;
         }
         else
         {
-            // If not grabbing, log a message
             grabbedObjectName = "noObjectGrabbed";
             isGrabbing = false;
         }
