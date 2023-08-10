@@ -18,13 +18,13 @@ public class ControllerGrabLogger : MonoBehaviour
         if (interactor.hasSelection)
         {
             List<IXRSelectInteractable> interactables = interactor.interactablesSelected;
-            foreach (IXRSelectInteractable interactable in interactables)
+            foreach (IXRSelectInteractable interactable in interactables) 
             {
                 if (interactable is XRGrabInteractable grabInteractable)
                 {
                     grabbedObjectName = grabInteractable.gameObject.name;
                     isGrabbing = true;
-                    return;
+                    return; // assuming subjects only pick one piece at the time, so there is only one grabbed object
                 }
             }
             grabbedObjectName = "noObjectGrabbed";
