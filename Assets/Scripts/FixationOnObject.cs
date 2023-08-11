@@ -9,11 +9,6 @@ using System;
 
 public class FixationOnObject : MonoBehaviour, IGazeFocusable
 {
-
-    //private int userID = DataCollector.userID;
-    //private string condition = DataCollector.condition;
-    //private string dataDirectory = DataCollector.dataDirectory;
-    //private string fileName;
     private float timeStamp;
     private int frame;
     private bool _hasFocus;

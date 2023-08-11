@@ -5,15 +5,16 @@ using System;
 using Tobii.XR;
 using System.IO;
 using UnityEngine.XR.Interaction.Toolkit;
+using ViveSR.anipal.Eye;
 
 public class DataCollector : MonoBehaviour
 {
     public bool writeDataToFile = false;
 
-    static public int userID = 0;
-    static public string condition = "baseline";
-    static public string dataDirectory = "Data";
-    private string fileName = Directory.GetCurrentDirectory() + "\\" + dataDirectory + "\\datafile_" + condition + "_" + userID.ToString() + ".csv";
+    public int userID = 0;
+    public string condition = "baseline";
+    public string dataDirectory = "Data";
+    private string fileName;
     private int frame;
     private float timeStamp;
 
@@ -32,7 +33,8 @@ public class DataCollector : MonoBehaviour
     public bool isGrabbing;
 
     public countObjectsColliding objectsCollidingScript;
-    public ControllerGrabLogger controllerGrabLogger; 
+    public ControllerGrabLogger controllerGrabLogger;
+    public pupillometryDataCollector pupillometryDataCollector;
 
     // Start is called before the first frame update
     void Awake()
@@ -43,6 +45,7 @@ public class DataCollector : MonoBehaviour
 
     void Start()
     {
+        fileName = Path.Combine(Directory.GetCurrentDirectory(), dataDirectory, "datafile_" + condition + "_" + userID.ToString() + ".csv");
         grabbedObject = GetComponent<XRGrabInteractable>();
         CreateOutput();
     }
@@ -61,6 +64,8 @@ public class DataCollector : MonoBehaviour
         Vector3 RightControllerPosition = RigidBodyRightController.position;
         Quaternion RightControllerRotation = RigidBodyRightController.rotation;
         Vector3 RightControllerVelocity = RigidBodyRightController.velocity;
+
+        
 
         var eyeTrackingData = TobiiXR.GetEyeTrackingData(TobiiXR_TrackingSpace.World);
         timeStamp = eyeTrackingData.Timestamp;
@@ -111,6 +116,10 @@ public class DataCollector : MonoBehaviour
                  convergenceDistance,
                  isLeftEyeBlinking,
                  isRightEyeBlinking,
+                 pupillometryDataCollector.eyeOpennessLeft,
+                 pupillometryDataCollector.eyeOpennessRight,
+                 pupillometryDataCollector.pupilDiameterLeft,
+                 pupillometryDataCollector.pupilDiameterRight,
                  eyesDirection,
                  focusObjectName,
                  focusObjectTag,
@@ -140,7 +149,11 @@ public class DataCollector : MonoBehaviour
         "rayDirection;" +
         "convergenceDistance;" +
         "isLeftEyeBlinking;" +
-        "isRightEyeBlinking;" + 
+        "isRightEyeBlinking;" +
+        "eyeOpennessLeft;" +
+        "eyeOpennessRight;" +
+        "pupilDiameterLeft;" +
+        "pupilDiameterRight;" +
         "eyesDirection;" +
         "focusObjectName;" +
         "focusObjectTag;" +
@@ -168,6 +181,10 @@ public class DataCollector : MonoBehaviour
         float convergenceDistance,
         bool isLeftEyeBlinking,
         bool isRightEyeBlinking,
+        float eyeOpennessLeft,
+        float eyeOpennessRight,
+        float pupilDiameterLeft,
+        float pupilDiameterRight,
         Vector3 eyesDirection,
         string focusObjectName,
         string focusObjectTag,
@@ -194,6 +211,10 @@ public class DataCollector : MonoBehaviour
             convergenceDistance.ToString() + ";" +
             isLeftEyeBlinking.ToString() + ";" +
             isRightEyeBlinking.ToString() + ";" +
+            eyeOpennessLeft.ToString() + ";" +
+            eyeOpennessRight.ToString() + ";" +
+            pupilDiameterLeft.ToString() + ";" +
+            pupilDiameterRight.ToString() + ";" +
             eyesDirection.ToString() + ";" +
             focusObjectName + ";" +                         // No need for ToString()
             focusObjectTag + ";" +                          // No need for ToString()
