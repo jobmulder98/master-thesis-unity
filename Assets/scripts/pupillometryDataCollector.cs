@@ -13,7 +13,7 @@ public class pupillometryDataCollector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        SRanipal_Eye_v2.GetVerboseData(out VerboseData pupillometryData);
     }
 
     // Update is called once per frame

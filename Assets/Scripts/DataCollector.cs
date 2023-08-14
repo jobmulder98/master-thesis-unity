@@ -12,7 +12,7 @@ public class DataCollector : MonoBehaviour
     public bool writeDataToFile = false;
 
     public int userID = 0;
-    public string condition = "baseline";
+    public int condition = 1;
     public string dataDirectory = "Data";
     private string fileName;
     private int frame;
@@ -45,7 +45,7 @@ public class DataCollector : MonoBehaviour
 
     void Start()
     {
-        fileName = Path.Combine(Directory.GetCurrentDirectory(), dataDirectory, "datafile_" + condition + "_" + userID.ToString() + ".csv");
+        fileName = Path.Combine(Directory.GetCurrentDirectory(), dataDirectory, "datafile_user" + userID.ToString() + "_C" + condition + ".csv");
         grabbedObject = GetComponent<XRGrabInteractable>();
         CreateOutput();
     }
@@ -64,8 +64,6 @@ public class DataCollector : MonoBehaviour
         Vector3 RightControllerPosition = RigidBodyRightController.position;
         Quaternion RightControllerRotation = RigidBodyRightController.rotation;
         Vector3 RightControllerVelocity = RigidBodyRightController.velocity;
-
-        
 
         var eyeTrackingData = TobiiXR.GetEyeTrackingData(TobiiXR_TrackingSpace.World);
         timeStamp = eyeTrackingData.Timestamp;
@@ -111,6 +109,10 @@ public class DataCollector : MonoBehaviour
         if (writeDataToFile)
         {
             WriteOutput(
+                 userID,
+                 condition,
+                 timeStamp,
+                 frame,
                  rayOrigin,
                  rayDirection,
                  convergenceDistance,
@@ -143,6 +145,8 @@ public class DataCollector : MonoBehaviour
     void CreateOutput()
     {
         string variable =
+        "userID;" +
+        "condition;" +
         "timeStamp;" +
         "frame;" +
         "rayOrigin;" +
@@ -176,6 +180,10 @@ public class DataCollector : MonoBehaviour
     }
 
     void WriteOutput(
+        int userID,
+        int condition,
+        float timeStamp,
+        int frame,
         Vector3 rayOrigin,
         Vector3 rayDirection,
         float convergenceDistance,
@@ -204,6 +212,8 @@ public class DataCollector : MonoBehaviour
         )
     {
         string value =
+            userID.ToString() + ";" +
+            condition.ToString() + ";" +
             timeStamp.ToString() + ";" +
             frame.ToString() + ";" +
             rayOrigin.ToString() + ";" +
