@@ -26,6 +26,8 @@ public class DataCollector : MonoBehaviour
     Vector3 rayDirection;
     float convergenceDistance;
 
+    string itemsInCartReformatted;
+
     public Rigidbody RigidBodyHMD;
     public Rigidbody RigidBodyLeftController;
     public Rigidbody RigidBodyRightController;
@@ -112,7 +114,8 @@ public class DataCollector : MonoBehaviour
         }
 
         frame++;
-        string itemsInCartReformatted = string.Join(",", objectsCollidingScript.itemsInCart);
+        List<string> items = objectsCollidingScript.itemsInCart;
+        itemsInCartReformatted = string.Join(",", items.ToArray());
 
         if (writeDataToFile)
         {
