@@ -14,9 +14,10 @@ public class DataCollector : MonoBehaviour
     public int userID = 0;
     public int condition = 1;
     public string dataDirectory = "Data";
+    private string filePath;
     private string fileName;
     private int frame;
-    private float timeStamp;
+    DateTime timeStamp;
 
     private string focusObjectName;
     private string focusObjectTag;
@@ -45,7 +46,8 @@ public class DataCollector : MonoBehaviour
 
     void Start()
     {
-        fileName = Path.Combine(Directory.GetCurrentDirectory(), dataDirectory, "datafile_user" + userID.ToString() + "_C" + condition + ".csv");
+        filePath = Path.Combine(Directory.GetCurrentDirectory(), dataDirectory, userID.ToString());
+        fileName = Path.Combine(Directory.GetCurrentDirectory(), dataDirectory, userID.ToString(), "datafile_" + "C" + condition + ".csv");
         grabbedObject = GetComponent<XRGrabInteractable>();
         CreateOutput();
     }
@@ -65,8 +67,10 @@ public class DataCollector : MonoBehaviour
         Quaternion RightControllerRotation = RigidBodyRightController.rotation;
         Vector3 RightControllerVelocity = RigidBodyRightController.velocity;
 
+        timeStamp = DateTime.Now;
+        string formattedTimestamp = timeStamp.ToString("yyyy-MM-dd HH:mm:ss");
+
         var eyeTrackingData = TobiiXR.GetEyeTrackingData(TobiiXR_TrackingSpace.World);
-        timeStamp = eyeTrackingData.Timestamp;
 
         if (eyeTrackingData.GazeRay.IsValid)
         {
@@ -111,7 +115,7 @@ public class DataCollector : MonoBehaviour
             WriteOutput(
                  userID,
                  condition,
-                 timeStamp,
+                 formattedTimestamp,
                  frame,
                  rayOrigin,
                  rayDirection,
@@ -176,13 +180,18 @@ public class DataCollector : MonoBehaviour
         "grabbedObjectName" +
         Environment.NewLine;
 
+        if (!File.Exists(fileName))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+        }
+
         File.AppendAllText(fileName, variable);
     }
 
     void WriteOutput(
         int userID,
         int condition,
-        float timeStamp,
+        string timeStamp,
         int frame,
         Vector3 rayOrigin,
         Vector3 rayDirection,
@@ -214,7 +223,7 @@ public class DataCollector : MonoBehaviour
         string value =
             userID.ToString() + ";" +
             condition.ToString() + ";" +
-            timeStamp.ToString() + ";" +
+            timeStamp + ";" +
             frame.ToString() + ";" +
             rayOrigin.ToString() + ";" +
             rayDirection.ToString() + ";" +
