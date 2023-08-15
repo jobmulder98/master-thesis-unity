@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.tobii.xr.sdk": {
-      "version": "file:C:/Users/LocalAdmin/Documents/Unity Projects/TobiiXR",
+      "version": "file:C:/Users/jobmu/OneDrive/Documenten/Master jaar 2/Master Thesis/Master Thesis/TobiiXR",
       "depth": 0,
       "source": "local",
       "dependencies": {
