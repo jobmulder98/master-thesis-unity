@@ -68,9 +68,11 @@ public class DataCollector : MonoBehaviour
         Vector3 RightControllerVelocity = RigidBodyRightController.velocity;
 
         timeStamp = DateTime.Now;
-        string formattedTimestamp = timeStamp.ToString("yyyy-MM-dd HH:mm:ss");
+        string formattedTimestampDatetime = timeStamp.ToString("yyyy-MM-dd HH:mm:ss.ffff");
 
         var eyeTrackingData = TobiiXR.GetEyeTrackingData(TobiiXR_TrackingSpace.World);
+
+        float timeStampTrackingData = eyeTrackingData.Timestamp;
 
         if (eyeTrackingData.GazeRay.IsValid)
         {
@@ -106,16 +108,19 @@ public class DataCollector : MonoBehaviour
         else
         {
             focusObjectName = "notAssigned";
+            focusObjectTag = "notAssigned";
         }
 
         frame++;
+        string itemsInCartReformatted = string.Join(",", objectsCollidingScript.itemsInCart);
 
         if (writeDataToFile)
         {
             WriteOutput(
                  userID,
                  condition,
-                 formattedTimestamp,
+                 formattedTimestampDatetime,
+                 timeStampTrackingData,
                  frame,
                  rayOrigin,
                  rayDirection,
@@ -139,7 +144,7 @@ public class DataCollector : MonoBehaviour
                  RightControllerRotation,
                  RightControllerVelocity,
                  objectsCollidingScript.numberOfItemsInCart,
-                 objectsCollidingScript.itemsInCart,
+                 itemsInCartReformatted,
                  controllerGrabLogger.isGrabbing,
                  controllerGrabLogger.grabbedObjectName
                  );
@@ -151,7 +156,8 @@ public class DataCollector : MonoBehaviour
         string variable =
         "userID;" +
         "condition;" +
-        "timeStamp;" +
+        "timeStampDatetime;" +
+        "timeStampTrackingData;" +
         "frame;" +
         "rayOrigin;" +
         "rayDirection;" +
@@ -191,7 +197,8 @@ public class DataCollector : MonoBehaviour
     void WriteOutput(
         int userID,
         int condition,
-        string timeStamp,
+        string timeStampDatetime,
+        float timeStampTrackingData,
         int frame,
         Vector3 rayOrigin,
         Vector3 rayDirection,
@@ -215,7 +222,7 @@ public class DataCollector : MonoBehaviour
         Quaternion RightControllerRotation,
         Vector3 RightControllerVelocity,
         int numberOfItemsInCart,
-        List<string> itemsInCart,
+        string itemsInCart,
         bool isGrabbing, 
         string grabbedObjectName
         )
@@ -223,7 +230,8 @@ public class DataCollector : MonoBehaviour
         string value =
             userID.ToString() + ";" +
             condition.ToString() + ";" +
-            timeStamp + ";" +
+            timeStampDatetime + ";" +
+            timeStampTrackingData.ToString() + ";" +
             frame.ToString() + ";" +
             rayOrigin.ToString() + ";" +
             rayDirection.ToString() + ";" +
@@ -247,7 +255,7 @@ public class DataCollector : MonoBehaviour
             RightControllerRotation.ToString() + ";" +
             RightControllerVelocity.ToString() + ";" +
             numberOfItemsInCart.ToString() + ";" +
-            itemsInCart.ToString() + ";" +
+            itemsInCart + ";" +
             isGrabbing.ToString() + ";" + 
             grabbedObjectName + ";" +
             Environment.NewLine;
