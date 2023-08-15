@@ -28,6 +28,7 @@
 
 # Directories
 Data/*
+Assets/Audio/n-back*
 
 # Gradle cache directory
 .gradle/
