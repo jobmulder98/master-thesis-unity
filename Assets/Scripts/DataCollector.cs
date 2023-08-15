@@ -14,7 +14,6 @@ public class DataCollector : MonoBehaviour
     public int userID = 0;
     public int condition = 1;
     public string dataDirectory = "Data";
-    private string filePath;
     private string fileName;
     private int frame;
     DateTime timeStamp;
@@ -48,7 +47,6 @@ public class DataCollector : MonoBehaviour
 
     void Start()
     {
-        filePath = Path.Combine(Directory.GetCurrentDirectory(), dataDirectory, userID.ToString());
         fileName = Path.Combine(Directory.GetCurrentDirectory(), dataDirectory, userID.ToString(), "datafile_" + "C" + condition + ".csv");
         grabbedObject = GetComponent<XRGrabInteractable>();
         CreateOutput();
