@@ -57,15 +57,12 @@ public class DataCollector : MonoBehaviour
     {
         Vector3 HMDPosition = RigidBodyHMD.position;
         Quaternion HMDRotation = RigidBodyHMD.rotation;
-        Vector3 HMDVelocity = RigidBodyHMD.velocity;
 
         Vector3 LeftControllerPosition = RigidBodyLeftController.position;
         Quaternion LeftControllerRotation = RigidBodyLeftController.rotation;
-        Vector3 LeftControllerVelocity = RigidBodyLeftController.velocity;
 
         Vector3 RightControllerPosition = RigidBodyRightController.position;
         Quaternion RightControllerRotation = RigidBodyRightController.rotation;
-        Vector3 RightControllerVelocity = RigidBodyRightController.velocity;
 
         timeStamp = DateTime.Now;
         string formattedTimestampDatetime = timeStamp.ToString("yyyy-MM-dd HH:mm:ss.ffff");
@@ -137,13 +134,10 @@ public class DataCollector : MonoBehaviour
                  focusObjectTag,
                  HMDPosition,
                  HMDRotation,
-                 HMDVelocity,
                  LeftControllerPosition,
                  LeftControllerRotation,
-                 LeftControllerVelocity,
                  RightControllerPosition,
                  RightControllerRotation,
-                 RightControllerVelocity,
                  objectsCollidingScript.numberOfItemsInCart,
                  itemsInCartReformatted,
                  controllerGrabLogger.isGrabbing,
@@ -174,13 +168,10 @@ public class DataCollector : MonoBehaviour
         "focusObjectTag;" +
         "HMDposition;" +
         "HMDrotation;" +
-        "HMDvelocity;" +
         "LeftControllerPosition;" +
         "LeftControllerRotation;" +
-        "LeftControllerVelocity;" +
         "RightControllerPosition;" +
         "RightControllerRotation;" +
-        "RightControllerVelocity;" +
         "numberOfItemsInCart;" + 
         "itemsInCart;" +
         "isGrabbing;" +
@@ -215,13 +206,10 @@ public class DataCollector : MonoBehaviour
         string focusObjectTag,
         Vector3 HMDposition,
         Quaternion HMDrotation,
-        Vector3 HMDvelocity,
         Vector3 LeftControllerPosition,
         Quaternion LeftControllerRotation,
-        Vector3 LeftControllerVelocity,
         Vector3 RightControllerPosition,
         Quaternion RightControllerRotation,
-        Vector3 RightControllerVelocity,
         int numberOfItemsInCart,
         string itemsInCart,
         bool isGrabbing, 
@@ -248,13 +236,10 @@ public class DataCollector : MonoBehaviour
             focusObjectTag + ";" +                          // No need for ToString()
             HMDposition.ToString() + ";" +
             HMDrotation.ToString() + ";" +
-            HMDvelocity.ToString() + ";" +
             LeftControllerPosition.ToString() + ";" +
             LeftControllerRotation.ToString() + ";" +
-            LeftControllerVelocity.ToString() + ";" +
             RightControllerPosition.ToString() + ";" +
             RightControllerRotation.ToString() + ";" +
-            RightControllerVelocity.ToString() + ";" +
             numberOfItemsInCart.ToString() + ";" +
             itemsInCart + ";" +
             isGrabbing.ToString() + ";" + 
