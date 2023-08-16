@@ -36,7 +36,7 @@ public class DataCollector : MonoBehaviour
 
     public countObjectsColliding objectsCollidingScript;
     public ControllerGrabLogger controllerGrabLogger;
-    public pupillometryDataCollector pupillometryDataCollector;
+    // public pupillometryDataCollector pupillometryDataCollector;
 
     // Start is called before the first frame update
     void Awake()
@@ -128,10 +128,10 @@ public class DataCollector : MonoBehaviour
                  convergenceDistance,
                  isLeftEyeBlinking,
                  isRightEyeBlinking,
-                 pupillometryDataCollector.eyeOpennessLeft,
-                 pupillometryDataCollector.eyeOpennessRight,
-                 pupillometryDataCollector.pupilDiameterLeft,
-                 pupillometryDataCollector.pupilDiameterRight,
+                //  pupillometryDataCollector.eyeOpennessLeft,
+                //  pupillometryDataCollector.eyeOpennessRight,
+                //  pupillometryDataCollector.pupilDiameterLeft,
+                //  pupillometryDataCollector.pupilDiameterRight,
                  eyesDirection,
                  focusObjectName,
                  focusObjectTag,
@@ -165,10 +165,10 @@ public class DataCollector : MonoBehaviour
         "convergenceDistance;" +
         "isLeftEyeBlinking;" +
         "isRightEyeBlinking;" +
-        "eyeOpennessLeft;" +
-        "eyeOpennessRight;" +
-        "pupilDiameterLeft;" +
-        "pupilDiameterRight;" +
+        // "eyeOpennessLeft;" +
+        // "eyeOpennessRight;" +
+        // "pupilDiameterLeft;" +
+        // "pupilDiameterRight;" +
         "eyesDirection;" +
         "focusObjectName;" +
         "focusObjectTag;" +
@@ -206,10 +206,10 @@ public class DataCollector : MonoBehaviour
         float convergenceDistance,
         bool isLeftEyeBlinking,
         bool isRightEyeBlinking,
-        float eyeOpennessLeft,
-        float eyeOpennessRight,
-        float pupilDiameterLeft,
-        float pupilDiameterRight,
+        // float eyeOpennessLeft,
+        // float eyeOpennessRight,
+        // float pupilDiameterLeft,
+        // float pupilDiameterRight,
         Vector3 eyesDirection,
         string focusObjectName,
         string focusObjectTag,
@@ -239,10 +239,10 @@ public class DataCollector : MonoBehaviour
             convergenceDistance.ToString() + ";" +
             isLeftEyeBlinking.ToString() + ";" +
             isRightEyeBlinking.ToString() + ";" +
-            eyeOpennessLeft.ToString() + ";" +
-            eyeOpennessRight.ToString() + ";" +
-            pupilDiameterLeft.ToString() + ";" +
-            pupilDiameterRight.ToString() + ";" +
+            // eyeOpennessLeft.ToString() + ";" +
+            // eyeOpennessRight.ToString() + ";" +
+            // pupilDiameterLeft.ToString() + ";" +
+            // pupilDiameterRight.ToString() + ";" +
             eyesDirection.ToString() + ";" +
             focusObjectName + ";" +                         // No need for ToString()
             focusObjectTag + ";" +                          // No need for ToString()
