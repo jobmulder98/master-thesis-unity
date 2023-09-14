@@ -243,7 +243,7 @@ public class DataCollector : MonoBehaviour
             numberOfItemsInCart.ToString() + ";" +
             itemsInCart + ";" +
             isGrabbing.ToString() + ";" + 
-            grabbedObjectName + ";" +
+            grabbedObjectName +  // NOTE THAT THERE IS NO SEMICOLUMN HERE
             Environment.NewLine;
 
         File.AppendAllText(fileName, value);
