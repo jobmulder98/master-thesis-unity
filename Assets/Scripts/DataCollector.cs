@@ -149,7 +149,7 @@ public class DataCollector : MonoBehaviour
     void CreateOutput()
     {
         string variable =
-        "userID;" +
+        "userId;" +
         "condition;" +
         "timeStampDatetime;" +
         "timeStampTrackingData;" +
@@ -166,12 +166,12 @@ public class DataCollector : MonoBehaviour
         "eyesDirection;" +
         "focusObjectName;" +
         "focusObjectTag;" +
-        "HMDposition;" +
-        "HMDrotation;" +
-        "LeftControllerPosition;" +
-        "LeftControllerRotation;" +
-        "RightControllerPosition;" +
-        "RightControllerRotation;" +
+        "hmdPosition;" +
+        "hmdRotation;" +
+        "leftControllerPosition;" +
+        "leftControllerRotation;" +
+        "rightControllerPosition;" +
+        "rightControllerRotation;" +
         "numberOfItemsInCart;" + 
         "itemsInCart;" +
         "isGrabbing;" +
