@@ -14,7 +14,6 @@ public class DataCollector : MonoBehaviour
     public int userID = 0;
     public int condition = 1;
     public string dataDirectory = "Data";
-    private string filePath;
     private string fileName;
     private int frame;
     DateTime timeStamp;
@@ -26,6 +25,8 @@ public class DataCollector : MonoBehaviour
     Vector3 rayDirection;
     float convergenceDistance;
 
+    string itemsInCartReformatted;
+
     public Rigidbody RigidBodyHMD;
     public Rigidbody RigidBodyLeftController;
     public Rigidbody RigidBodyRightController;
@@ -35,7 +36,7 @@ public class DataCollector : MonoBehaviour
 
     public countObjectsColliding objectsCollidingScript;
     public ControllerGrabLogger controllerGrabLogger;
-    public pupillometryDataCollector pupillometryDataCollector;
+    // public pupillometryDataCollector pupillometryDataCollector;
 
     // Start is called before the first frame update
     void Awake()
@@ -46,31 +47,28 @@ public class DataCollector : MonoBehaviour
 
     void Start()
     {
-        filePath = Path.Combine(Directory.GetCurrentDirectory(), dataDirectory, userID.ToString());
         fileName = Path.Combine(Directory.GetCurrentDirectory(), dataDirectory, userID.ToString(), "datafile_" + "C" + condition + ".csv");
         grabbedObject = GetComponent<XRGrabInteractable>();
         CreateOutput();
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 HMDPosition = RigidBodyHMD.position;
         Quaternion HMDRotation = RigidBodyHMD.rotation;
-        Vector3 HMDVelocity = RigidBodyHMD.velocity;
 
         Vector3 LeftControllerPosition = RigidBodyLeftController.position;
         Quaternion LeftControllerRotation = RigidBodyLeftController.rotation;
-        Vector3 LeftControllerVelocity = RigidBodyLeftController.velocity;
 
         Vector3 RightControllerPosition = RigidBodyRightController.position;
         Quaternion RightControllerRotation = RigidBodyRightController.rotation;
-        Vector3 RightControllerVelocity = RigidBodyRightController.velocity;
 
         timeStamp = DateTime.Now;
-        string formattedTimestamp = timeStamp.ToString("yyyy-MM-dd HH:mm:ss");
+        string formattedTimestampDatetime = timeStamp.ToString("yyyy-MM-dd HH:mm:ss.ffff");
 
         var eyeTrackingData = TobiiXR.GetEyeTrackingData(TobiiXR_TrackingSpace.World);
+
+        float timeStampTrackingData = eyeTrackingData.Timestamp;
 
         if (eyeTrackingData.GazeRay.IsValid)
         {
@@ -106,40 +104,37 @@ public class DataCollector : MonoBehaviour
         else
         {
             focusObjectName = "notAssigned";
+            focusObjectTag = "notAssigned";
         }
 
         frame++;
+        List<string> items = objectsCollidingScript.itemsInCart;
+        itemsInCartReformatted = string.Join(",", items.ToArray());
 
         if (writeDataToFile)
         {
             WriteOutput(
                  userID,
                  condition,
-                 formattedTimestamp,
+                 formattedTimestampDatetime,
+                 timeStampTrackingData,
                  frame,
                  rayOrigin,
                  rayDirection,
                  convergenceDistance,
                  isLeftEyeBlinking,
                  isRightEyeBlinking,
-                 pupillometryDataCollector.eyeOpennessLeft,
-                 pupillometryDataCollector.eyeOpennessRight,
-                 pupillometryDataCollector.pupilDiameterLeft,
-                 pupillometryDataCollector.pupilDiameterRight,
                  eyesDirection,
                  focusObjectName,
                  focusObjectTag,
                  HMDPosition,
                  HMDRotation,
-                 HMDVelocity,
                  LeftControllerPosition,
                  LeftControllerRotation,
-                 LeftControllerVelocity,
                  RightControllerPosition,
                  RightControllerRotation,
-                 RightControllerVelocity,
                  objectsCollidingScript.numberOfItemsInCart,
-                 objectsCollidingScript.itemsInCart,
+                 itemsInCartReformatted,
                  controllerGrabLogger.isGrabbing,
                  controllerGrabLogger.grabbedObjectName
                  );
@@ -149,31 +144,25 @@ public class DataCollector : MonoBehaviour
     void CreateOutput()
     {
         string variable =
-        "userID;" +
+        "userId;" +
         "condition;" +
-        "timeStamp;" +
+        "timeStampDatetime;" +
+        "timeStampTrackingData;" +
         "frame;" +
         "rayOrigin;" +
         "rayDirection;" +
         "convergenceDistance;" +
         "isLeftEyeBlinking;" +
         "isRightEyeBlinking;" +
-        "eyeOpennessLeft;" +
-        "eyeOpennessRight;" +
-        "pupilDiameterLeft;" +
-        "pupilDiameterRight;" +
         "eyesDirection;" +
         "focusObjectName;" +
         "focusObjectTag;" +
-        "HMDposition;" +
-        "HMDrotation;" +
-        "HMDvelocity;" +
-        "LeftControllerPosition;" +
-        "LeftControllerRotation;" +
-        "LeftControllerVelocity;" +
-        "RightControllerPosition;" +
-        "RightControllerRotation;" +
-        "RightControllerVelocity;" +
+        "hmdPosition;" +
+        "hmdRotation;" +
+        "leftControllerPosition;" +
+        "leftControllerRotation;" +
+        "rightControllerPosition;" +
+        "rightControllerRotation;" +
         "numberOfItemsInCart;" + 
         "itemsInCart;" +
         "isGrabbing;" +
@@ -191,31 +180,25 @@ public class DataCollector : MonoBehaviour
     void WriteOutput(
         int userID,
         int condition,
-        string timeStamp,
+        string timeStampDatetime,
+        float timeStampTrackingData,
         int frame,
         Vector3 rayOrigin,
         Vector3 rayDirection,
         float convergenceDistance,
         bool isLeftEyeBlinking,
         bool isRightEyeBlinking,
-        float eyeOpennessLeft,
-        float eyeOpennessRight,
-        float pupilDiameterLeft,
-        float pupilDiameterRight,
         Vector3 eyesDirection,
         string focusObjectName,
         string focusObjectTag,
         Vector3 HMDposition,
         Quaternion HMDrotation,
-        Vector3 HMDvelocity,
         Vector3 LeftControllerPosition,
         Quaternion LeftControllerRotation,
-        Vector3 LeftControllerVelocity,
         Vector3 RightControllerPosition,
         Quaternion RightControllerRotation,
-        Vector3 RightControllerVelocity,
         int numberOfItemsInCart,
-        List<string> itemsInCart,
+        string itemsInCart,
         bool isGrabbing, 
         string grabbedObjectName
         )
@@ -223,33 +206,27 @@ public class DataCollector : MonoBehaviour
         string value =
             userID.ToString() + ";" +
             condition.ToString() + ";" +
-            timeStamp + ";" +
+            timeStampDatetime + ";" +
+            timeStampTrackingData.ToString() + ";" +
             frame.ToString() + ";" +
             rayOrigin.ToString() + ";" +
             rayDirection.ToString() + ";" +
             convergenceDistance.ToString() + ";" +
             isLeftEyeBlinking.ToString() + ";" +
             isRightEyeBlinking.ToString() + ";" +
-            eyeOpennessLeft.ToString() + ";" +
-            eyeOpennessRight.ToString() + ";" +
-            pupilDiameterLeft.ToString() + ";" +
-            pupilDiameterRight.ToString() + ";" +
             eyesDirection.ToString() + ";" +
             focusObjectName + ";" +                         // No need for ToString()
             focusObjectTag + ";" +                          // No need for ToString()
             HMDposition.ToString() + ";" +
             HMDrotation.ToString() + ";" +
-            HMDvelocity.ToString() + ";" +
             LeftControllerPosition.ToString() + ";" +
             LeftControllerRotation.ToString() + ";" +
-            LeftControllerVelocity.ToString() + ";" +
             RightControllerPosition.ToString() + ";" +
             RightControllerRotation.ToString() + ";" +
-            RightControllerVelocity.ToString() + ";" +
             numberOfItemsInCart.ToString() + ";" +
-            itemsInCart.ToString() + ";" +
+            itemsInCart + ";" +
             isGrabbing.ToString() + ";" + 
-            grabbedObjectName + ";" +
+            grabbedObjectName +  // NOTE THAT THERE IS NO SEMICOLUMN HERE
             Environment.NewLine;
 
         File.AppendAllText(fileName, value);

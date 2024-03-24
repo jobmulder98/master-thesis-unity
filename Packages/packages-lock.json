@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.tobii.xr.sdk": {
-      "version": "file:C:/Users/jobmu/OneDrive/Documenten/Master jaar 2/Master Thesis/Master Thesis/TobiiXR",
+      "version": "file:C:/Users/LocalAdmin/Documents/Thesis Job/TobiiXR",
       "depth": 0,
       "source": "local",
       "dependencies": {
@@ -63,6 +63,15 @@
       "depth": 2,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.recorder": {
+      "version": "3.0.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.timeline": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.services.core": {

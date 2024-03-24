@@ -28,7 +28,6 @@
 
 # Directories
 Data/*
-Assets/Audio/n-back*
 
 # Gradle cache directory
 .gradle/
@@ -50,6 +49,10 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+
+# large audio files
+*.wma*
+/Assets/Audio/n-back task/n-back_instructions.wav*
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -74,3 +77,5 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+Packages/manifest.json
+Packages/packages-lock.json
