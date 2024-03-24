@@ -3,6 +3,7 @@ This readme document contains the following sections:
 1. Clone or fork the repository 
 2. Setting up Unity
 3. The code
+4. Import errors
 
 ## 1. Fork the repository 
 1. Fork this repository so you can make changes yourself
@@ -58,4 +59,7 @@ This readme document contains the following sections:
 
 ## 3. The code 
 The code could be found in the Assets directory, under the scripts folder. The function of the code speaks for itself, but for convenience comments are added to the code to make it even more comprehensive. Moreover, in the thesis report an explanation of the most important scripts is provided. If there are any questions, please don't hessitate to contact me.
+
+## 4. Import errros
+It might be that you bump into import errors, such as _the type or namespace name "Tobii" could not be found (are you missing a using directive or an assembly reference?)_. No worries, this means that the path in the manifest.json to the packages is wrong. Re-import the packages again from your computer, as in step 5, 6 and 7 from the **Setting up Unity** section.
 
