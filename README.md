@@ -57,8 +57,6 @@ This readme document contains the following sections:
 
 10.	The scene is set up correctly! Proceed to the next section to understand the code or jump to the last section to run the scene.
 
-## 3. Understanding the code 
-TODO
+## 3. The code 
+The code could be found in the Assets directory, under the scripts folder. The function of the code speaks for itself, but for convenience comments are added to the code to make it even more comprehensive. Moreover, in the thesis report an explanation of the most important scripts is provided. If there are any questions, please don't hessitate to contact me.
 
-## 4. Running the scene
-TODO
