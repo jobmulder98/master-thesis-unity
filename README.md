@@ -2,8 +2,7 @@
 This readme document contains the following sections:
 1. Clone or fork the repository 
 2. Setting up Unity
-3. Understanding the code
-4. Running the scene
+3. The code
 
 ## 1. Fork the repository 
 1. Fork this repository so you can make changes yourself
